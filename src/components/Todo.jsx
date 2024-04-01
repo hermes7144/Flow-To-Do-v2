@@ -25,10 +25,10 @@ export default function Todo({ category }) {
   const completedTodo = todos.filter((todo) => todo.status === 'completed' && todo.completedDate === getDate());
 
   return (
-    <>
+    <div className='p-2'>
       <PomodoroDashBoard activeTodo={activeTodo} completedCount={completedTodo.length} thisWeek={['오늘', '이번 주'].includes(category)} />
       <AddTodo category={category} />
       <TodoList activeTodo={activeTodo} completedTodo={completedTodo} category={category} />
-    </>
+    </div>
   );
 }
