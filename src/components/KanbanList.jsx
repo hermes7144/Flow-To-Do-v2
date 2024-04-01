@@ -9,7 +9,7 @@ export default function KanbanList({ date, index, todos }) {
       <span className='font-bold'>{index === 0 ? '기한 초과' : <TodoDate date={date} />}</span>
       <Droppable droppableId={date}>
         {(provided, snapshot) => (
-          <ul className={`flex flex-col min-h-16 ${snapshot.isDraggingOver ? 'bg-gray-100' : ''}`} ref={provided.innerRef} {...provided.droppableProps} isDraggingOver={snapshot.isDraggingOver}>
+          <ul className={`flex flex-col  min-h-16 ${snapshot.isDraggingOver ? 'bg-gray-100' : ''}`} ref={provided.innerRef} {...provided.droppableProps} isDraggingOver={snapshot.isDraggingOver}>
             {todos.map((todo, index) => (
               <KanbanItem key={todo.id} todo={todo} index={index} />
             ))}
