@@ -1,7 +1,7 @@
 import React from 'react';
 import TodoItem from './TodoItem';
 import EmptyTodo from './EmptyTodo';
-import { getDate } from '../js/CommonFunction';
+import { getDate, isString } from '../js/CommonFunction';
 import TodoDate from './TodoDate';
 
 export default function TodoList({ activeTodo, completedTodo, category }) {
@@ -13,7 +13,7 @@ export default function TodoList({ activeTodo, completedTodo, category }) {
       {!hasTodos && <EmptyTodo />}
       {hasTodos && (
         <ul className='flex-1'>
-          {category === '오늘' || category === '내일'
+          {category === '오늘' || category === '내일' || !isString(category)
             ? activeTodo.map((todo) => <TodoItem key={todo.id} todo={todo} />)
             : activeTodo.map((todo, index) => {
                 if (lastDate === null || todo.deadline > lastDate) {

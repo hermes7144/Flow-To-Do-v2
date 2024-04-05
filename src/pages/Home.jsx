@@ -7,6 +7,8 @@ import TodoCont from '../components/TodoCont';
 import NonModal from '../components/NonModal';
 import { BsThreeDots } from 'react-icons/bs';
 import Kanban from '../components/Kanban';
+import SidebarToggle from '../components/SidbarToggle';
+import { isString } from '../js/CommonFunction';
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(true);
@@ -34,6 +36,10 @@ export default function Home() {
     }, 300);
   };
 
+  const handleToggle = () => {
+    setShowOption((prev) => !prev);
+  };
+
   const toggleSidebar = () => setIsOpen((prev) => !prev);
 
   return (
@@ -41,9 +47,15 @@ export default function Home() {
       {view === 'LIST' && <SidebarCont isOpen={isOpen} isHovered={isHovered} setIsHovered={setIsHovered} category={category} handleSheduleClick={handleSheduleClick} />}
       <TodoCont>
         <div className='flex justify-between p-2'>
-          {view === 'LIST' ? <TodoHeader isOpen={isOpen} toggleSidebar={toggleSidebar} handleMouseEnter={handleMouseEnter} category={category} view={view} /> : <div></div>}
-
-          <button className='hover:bg-gray-200 p-1' onClick={() => setShowOption((prev) => !prev)}>
+          {view === 'LIST' ? (
+            <TodoHeader>
+              <SidebarToggle isOpen={isOpen} toggleSidebar={toggleSidebar} handleMouseEnter={handleMouseEnter} />
+              <span className='text-xl font-bold'>{isString(category) ? category : category.name}</span>
+            </TodoHeader>
+          ) : (
+            <div></div>
+          )}
+          <button className='hover:bg-gray-200 p-1' onClick={handleToggle}>
             <BsThreeDots className='h-6 w-6 text-gray-300' />
           </button>
           <NonModal show={showOption} handleOptionClick={handleOptionClick} handleViewClick={handleViewClick} />

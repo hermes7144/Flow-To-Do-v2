@@ -3,17 +3,21 @@ import TodoList from './../components/TodoList';
 import PomodoroDashBoard from '../components/PomodoroDashBoard';
 import useTodos from '../hooks/useTodos';
 import AddTodo from '../components/AddTodo';
-import { getDeadline, getDate } from '../js/CommonFunction';
+import { getDeadline, getDate, isString } from '../js/CommonFunction';
 
 function isDeadlineInRange(deadline, start, end) {
   return deadline >= start && deadline <= end;
 }
 
 function filterActiveTodos(category, todos) {
-  const deadline = getDeadline(category, true);
-  if (!deadline) return [];
+  if (isString(category)) {
+    const deadline = getDeadline(category, true);
+    if (!deadline) return [];
 
-  return todos.filter((todo) => todo.status === 'active' && (category === '내일' ? todo.deadline === deadline : category === '다음 주' ? isDeadlineInRange(todo.deadline, deadline.start, deadline.end) : todo.deadline <= deadline));
+    return todos.filter((todo) => todo.status === 'active' && (category === '내일' ? todo.deadline === deadline : category === '다음 주' ? isDeadlineInRange(todo.deadline, deadline.start, deadline.end) : todo.deadline <= deadline));
+  } else {
+    return todos.filter((todo) => todo.projectId === category.id);
+  }
 }
 
 export default function Todo({ category }) {
@@ -22,6 +26,8 @@ export default function Todo({ category }) {
   } = useTodos();
 
   const activeTodo = filterActiveTodos(category, todos);
+  console.log(activeTodo);
+
   const completedTodo = todos.filter((todo) => todo.status === 'completed' && todo.completedDate === getDate());
 
   return (

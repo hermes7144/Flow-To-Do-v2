@@ -3,7 +3,9 @@ import { getDate } from '../js/CommonFunction';
 
 export default function TodoDate({ date }) {
   let displayDate;
-  if (date === getDate(-1)) {
+  if (date === undefined) {
+    displayDate = '추후';
+  } else if (date === getDate(-1)) {
     displayDate = '어제';
   } else if (date === getDate()) {
     displayDate = '오늘';
@@ -13,5 +15,5 @@ export default function TodoDate({ date }) {
     displayDate = new Date(date).toLocaleDateString('ko', { day: 'numeric', month: 'short' });
   }
 
-  return <span className={`${date < getDate() && 'text-red-500'}`}>{displayDate}</span>;
+  return <span className={`${date && date < getDate() && 'text-red-500'}`}>{displayDate}</span>;
 }

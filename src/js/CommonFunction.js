@@ -44,10 +44,16 @@ export function getDeadline(category, includeStart = false) {
       return getDate(1)
     case '이번 주':
       return getThisWeek().end;
-    case '다음 주':
+    case '다음 주': {
       const nextWeek = getNextWeek();
       return includeStart ? nextWeek : nextWeek.end;
+    }
+
     default:
       return null;
   }
+}
+
+export function isString(param) {
+  return typeof param === 'string';
 }

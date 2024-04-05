@@ -48,11 +48,8 @@ export async function getTodos(uid) {
     const items = snapshot.val() || {};
 
     const sortedItems = Object.values(items).sort((a, b) => {
-      // 문자열 형태의 날짜를 비교하여 정렬
-      return a.deadline.localeCompare(b.deadline);
+      return a.deadline > b.deadline;
     });
-
-
     return sortedItems;
   });
 }
@@ -90,4 +87,31 @@ export async function getPomodoro(uid) {
 export async function setPomodoro(uid, pomodoro) {
   const date = getDate();
   await set(ref(database, `pomodoroCounts/${uid}/${date}`), pomodoro + 1);
+}
+
+
+export async function getProjects(uid) {
+  return await get(ref(database, `projects/${uid}`)).then((snapshot) => {
+    const items = snapshot.val() || {};
+    console.log(items);
+
+    const sortedItems = Object.values(items).sort((a, b) => {
+      console.log(a.createdDate, b.createdDate);
+
+      // 문자열 형태의 날짜를 비교하여 정렬
+      return a.createdDate > b.createdDate;
+    });
+
+    return sortedItems;
+  });
+}
+
+
+export async function addNewProject(uid, name) {
+  const id = uuid();
+  set(ref(database, `projects/${uid}/${id}`), {
+    id,
+    name,
+    createdDate: serverTimestamp(),
+  });
 }
