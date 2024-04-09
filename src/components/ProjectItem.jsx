@@ -6,11 +6,11 @@ export default function ProjectItem({ project, handleSheduleClick }) {
     handleSheduleClick(project);
   };
   return (
-    <li className='flex justify-between hover:cursor-pointer' onClick={handleClick}>
+    <li className='flex justify-between hover:cursor-pointer text-sm p-1' onClick={handleClick}>
       {project.name}
-      <button>
+      {/* <button>
         <BsThreeDots className='h-6 w-6 text-gray-200 hover:text-gray-300' />
-      </button>
+      </button> */}
     </li>
   );
 }

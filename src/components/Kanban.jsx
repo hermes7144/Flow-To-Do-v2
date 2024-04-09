@@ -1,27 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import useTodos from '../hooks/useTodos';
 import KanbanList from './KanbanList';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { getDate } from '../js/CommonFunction';
-
-function filterByDate(todos, date) {
-  if (date === getDate(-1)) {
-    return todos.filter((todo) => todo.deadline <= date && todo.status === 'active');
-  } else {
-    return todos.filter((todo) => todo.deadline === date);
-  }
-}
 
 export default function Kanban() {
-  let {
+  const {
     productsQuery: { data: todos },
   } = useTodos();
   const { updateTodo } = useTodos();
 
-  useEffect(() => {}, [todos]);
-
   const currentDate = new Date();
-  const dates = Array.from({ length: 7 }, (_, i) => {
+  const dates = Array.from({ length: 8 }, (_, i) => {
     const tempDate = new Date(currentDate);
     tempDate.setDate(currentDate.getDate() + i - 1);
     return tempDate.toISOString().substring(0, 10);
@@ -55,7 +44,7 @@ export default function Kanban() {
     <DragDropContext onDragEnd={onDragEnd}>
       <ul className='flex overflow-x-auto overflow-y' style={{ height: 'calc(100vh - 105px)' }}>
         {dates.map((date, index) => (
-          <KanbanList key={date} date={date} index={index} todos={filterByDate(todos, date)} />
+          <KanbanList key={date} date={date} index={index} />
         ))}
       </ul>
     </DragDropContext>

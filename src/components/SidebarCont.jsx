@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import Sidebar from '../components/Sidebar';
 
-export default function SidebarCont({ isOpen, category, handleSheduleClick, isHovered, setIsHovered }) {
+export default function SidebarCont({ isOpen, category, handleSheduleClick, isHovered, setIsHovered, handleSidebar }) {
   const side = useRef();
 
   // 사이드바 외부 클릭시 닫히는 함수
@@ -30,7 +30,7 @@ export default function SidebarCont({ isOpen, category, handleSheduleClick, isHo
       )}
       {/* mobile sidebar */}
       <div ref={side} className={`${isHovered ? 'absolute' : 'hidden'} z-10`}>
-        <Sidebar category={category} handleSheduleClick={handleSheduleClick} />
+        <Sidebar category={category} handleSheduleClick={handleSheduleClick} handleSidebar={handleSidebar} />
       </div>
     </>
   );

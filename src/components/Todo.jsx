@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import TodoList from './../components/TodoList';
 import PomodoroDashBoard from '../components/PomodoroDashBoard';
 import useTodos from '../hooks/useTodos';
@@ -25,10 +25,8 @@ export default function Todo({ category }) {
     productsQuery: { data: todos },
   } = useTodos();
 
-  const activeTodo = filterActiveTodos(category, todos);
-  console.log(activeTodo);
-
-  const completedTodo = todos.filter((todo) => todo.status === 'completed' && todo.completedDate === getDate());
+  const activeTodo = useMemo(() => filterActiveTodos(category, todos), [category, todos]);
+  const completedTodo = useMemo(() => todos.filter((todo) => todo.status === 'completed' && todo.completedDate === getDate()), [todos]);
 
   return (
     <div className='p-2'>

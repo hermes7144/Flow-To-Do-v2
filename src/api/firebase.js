@@ -44,14 +44,25 @@ export function onUserStateChange(callback) {
 }
 
 export async function getTodos(uid) {
-  return await get(ref(database, `todos/${uid}`)).then((snapshot) => {
-    const items = snapshot.val() || {};
+  const snapshot = await get(ref(database, `todos/${uid}`));
+  const items = Object.values(snapshot.val()) || [];
 
-    const sortedItems = Object.values(items).sort((a, b) => {
-      return a.deadline > b.deadline;
-    });
-    return sortedItems;
+  const sortedItems = items.sort((a, b) => {
+    if (a.deadline && b.deadline)
+    {
+      return a.deadline.localeCompare(b.deadline);
+    } else if (a.deadline)
+    {
+      return -1;
+    } else if (b.deadline)
+    {
+      return 1;
+    } else
+    {
+      return 0;
+    }
   });
+  return sortedItems;
 }
 
 export async function addNewTodo(uid, todo) {
@@ -92,16 +103,12 @@ export async function setPomodoro(uid, pomodoro) {
 
 export async function getProjects(uid) {
   return await get(ref(database, `projects/${uid}`)).then((snapshot) => {
-    const items = snapshot.val() || {};
+    const items = Object.values(snapshot.val()) || [];
+
     console.log(items);
-
-    const sortedItems = Object.values(items).sort((a, b) => {
-      console.log(a.createdDate, b.createdDate);
-
-      // 문자열 형태의 날짜를 비교하여 정렬
-      return a.createdDate > b.createdDate;
+    const sortedItems = items.sort((a, b) => {
+      return a.createdDate - b.createdDate;
     });
-
     return sortedItems;
   });
 }

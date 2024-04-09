@@ -13,7 +13,7 @@ const categories = [
   { name: '다음 주', icon: <RiCalendarCheckFill className='h-6 w-6 text-blue-400' /> },
 ];
 
-export default function Sidebar({ category, handleSheduleClick }) {
+export default function Sidebar({ category, handleSheduleClick, handleSidebar }) {
   const {
     projectsQuery: { data: projects },
   } = useProjects();
@@ -33,7 +33,7 @@ export default function Sidebar({ category, handleSheduleClick }) {
           ))}
         </ul>
       </div>
-      <ProjectContainer />
+      <ProjectContainer handleSidebar={handleSidebar} />
     </div>
   );
 }

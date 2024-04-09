@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { FaRegPauseCircle, FaRegPlayCircle, FaRegStopCircle } from 'react-icons/fa';
 import usePomodoro from '../hooks/usePomodoro';
 import { usePomodoroContext } from '../context/PomodoroContext';
@@ -33,45 +33,43 @@ export default function Pomodoro() {
   const [isRestRunning, setIsRestRunning] = useState(false);
   const [isPomodoroRunning, setIsPomodoroRunning] = useState(true); // Pomodoro 실행 여부를 추적하는 변수
 
-  const handlePomodoroEnd = useCallback(
-    (timer) => {
-      setIsPomodoroRunning(false);
-      addPomodoro.mutate();
+  const intervalRef = useRef(null);
+  const restIntervalRef = useRef(null);
 
-      if (runningTodo) {
-        const todoToUpdate = todos.find((todo) => todo.id === runningTodo.id);
-        if (todoToUpdate) {
-          updateTodo.mutate({ ...todoToUpdate, done: todoToUpdate.done + 1 });
-        }
+  const handlePomodoroEnd = useCallback(() => {
+    setIsPomodoroRunning(false);
+    addPomodoro.mutate();
+
+    if (runningTodo) {
+      const todoToUpdate = todos.find((todo) => todo.id === runningTodo.id);
+      if (todoToUpdate) {
+        updateTodo.mutate({ ...todoToUpdate, done: todoToUpdate.done + 1 });
       }
+    }
 
-      clearInterval(timer);
-      setIsRunning(false);
+    clearInterval(intervalRef.current);
+    setIsRunning(false);
 
-      pomodoroEndAction();
-    },
-    [todos, runningTodo, addPomodoro, updateTodo, setIsRunning]
-  );
+    pomodoroEndAction();
+  }, [todos, runningTodo, addPomodoro, updateTodo, setIsRunning]);
 
-  const handleRestEnd = (timer) => {
-    clearInterval(timer);
+  const handleRestEnd = () => {
+    clearInterval(restIntervalRef.current);
 
     setIsRestRunning(false);
     setIsPomodoroRunning(true);
   };
 
   useEffect(() => {
-    let timer;
-
     if (isRunning) {
       setIsPomodoroRunning(true);
 
-      timer = setInterval(() => {
+      intervalRef.current = setInterval(() => {
         setSeconds((prev) => {
           if (prev > 0) {
             return prev - 1;
           } else {
-            handlePomodoroEnd(timer);
+            handlePomodoroEnd();
             return POMODORO_TIME;
           }
         });
@@ -79,15 +77,13 @@ export default function Pomodoro() {
     }
 
     return () => {
-      clearInterval(timer);
+      clearInterval(intervalRef.current);
     };
   }, [isRunning, handlePomodoroEnd]);
 
   useEffect(() => {
-    let timer;
-
     if (isRestRunning) {
-      timer = setInterval(() => {
+      restIntervalRef.current = setInterval(() => {
         setRestSeconds((prev) => {
           if (prev > 0) {
             return prev - 1;
@@ -106,7 +102,7 @@ export default function Pomodoro() {
     }
 
     return () => {
-      clearInterval(timer);
+      clearInterval(restIntervalRef.current);
     };
   }, [isRestRunning]);
 

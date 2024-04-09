@@ -30,6 +30,11 @@ export default function Home() {
     isHovered && setIsHovered(false);
   };
 
+  const handleSidebar = () => {
+    console.log('handleSidbarClick');
+    isHovered && setIsHovered(false);
+  };
+
   const handleMouseEnter = () => {
     setTimeout(() => {
       setIsHovered(true);
@@ -44,7 +49,7 @@ export default function Home() {
 
   return (
     <div className='flex w-full'>
-      {view === 'LIST' && <SidebarCont isOpen={isOpen} isHovered={isHovered} setIsHovered={setIsHovered} category={category} handleSheduleClick={handleSheduleClick} />}
+      {view === 'LIST' && <SidebarCont isOpen={isOpen} isHovered={isHovered} setIsHovered={setIsHovered} category={category} handleSheduleClick={handleSheduleClick} handleSidebar={handleSidebar} />}
       <TodoCont>
         <div className='flex justify-between p-2'>
           {view === 'LIST' ? (
