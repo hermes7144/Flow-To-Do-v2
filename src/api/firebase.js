@@ -45,24 +45,30 @@ export function onUserStateChange(callback) {
 
 export async function getTodos(uid) {
   const snapshot = await get(ref(database, `todos/${uid}`));
-  const items = Object.values(snapshot.val()) || [];
 
-  const sortedItems = items.sort((a, b) => {
-    if (a.deadline && b.deadline)
-    {
-      return a.deadline.localeCompare(b.deadline);
-    } else if (a.deadline)
-    {
-      return -1;
-    } else if (b.deadline)
-    {
-      return 1;
-    } else
-    {
-      return 0;
-    }
-  });
-  return sortedItems;
+  if (snapshot.exists())
+  {
+    const todos = Object.values(snapshot.val()).sort((a, b) => {
+      if (a.deadline && b.deadline)
+      {
+        return a.deadline.localeCompare(b.deadline);
+      } else if (a.deadline)
+      {
+        return -1;
+      } else if (b.deadline)
+      {
+        return 1;
+      } else
+      {
+        return 0;
+      }
+    });
+
+    return todos;
+  } else
+  {
+    return []
+  }
 }
 
 export async function addNewTodo(uid, todo) {
@@ -100,19 +106,17 @@ export async function setPomodoro(uid, pomodoro) {
   await set(ref(database, `pomodoroCounts/${uid}/${date}`), pomodoro + 1);
 }
 
-
 export async function getProjects(uid) {
-  return await get(ref(database, `projects/${uid}`)).then((snapshot) => {
-    const items = Object.values(snapshot.val()) || [];
-
-
-    const sortedItems = items.sort((a, b) => {
-      return a.createdDate - b.createdDate;
-    });
-    return sortedItems;
-  });
+  const snapshot = await get(ref(database, `projects/${uid}`));
+  if (snapshot.exists())
+  {
+    const projects = Object.values(snapshot.val());
+    return projects.sort((a, b) => a.createdDate - b.createdDate);
+  } else
+  {
+    return [];
+  }
 }
-
 
 export async function addNewProject(uid, name) {
   const id = uuid();
