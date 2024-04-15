@@ -105,7 +105,7 @@ export async function getProjects(uid) {
   return await get(ref(database, `projects/${uid}`)).then((snapshot) => {
     const items = Object.values(snapshot.val()) || [];
 
-    console.log(items);
+
     const sortedItems = items.sort((a, b) => {
       return a.createdDate - b.createdDate;
     });

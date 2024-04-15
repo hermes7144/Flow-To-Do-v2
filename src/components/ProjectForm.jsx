@@ -6,6 +6,7 @@ export default function ProjectForm({ closeModal }) {
   const { addProject } = useProjects();
 
   const handleAddProject = () => {
+    if (project.length === 0) return;
     addProject.mutate(project);
     closeModal();
   };
