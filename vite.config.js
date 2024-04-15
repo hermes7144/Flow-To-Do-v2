@@ -9,7 +9,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: ['react-modal', 'react-responsive']
+      external: ['./react-modal', './react-responsive']
     }
   }
 })
