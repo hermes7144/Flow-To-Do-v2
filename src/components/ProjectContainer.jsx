@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { BsPlus } from 'react-icons/bs';
 import Modal from 'react-modal';
 import { useMediaQuery } from 'react-responsive';
-import ProjectForm from './ProjectForm';
+import ProjectForm from 'ProjectForm';
 
 Modal.setAppElement('#root');
 
