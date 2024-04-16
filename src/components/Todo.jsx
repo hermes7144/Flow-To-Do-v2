@@ -14,9 +14,19 @@ function filterActiveTodos(category, todos) {
     const deadline = getDeadline(category, true);
     if (!deadline) return [];
 
-    return todos.filter((todo) => todo.status === 'active' && (category === '내일' ? todo.deadline === deadline : category === '다음 주' ? isDeadlineInRange(todo.deadline, deadline.start, deadline.end) : todo.deadline <= deadline));
+    return todos.filter((todo) => {
+      if (todo.status !== 'active') return false;
+
+      if (category === '내일') {
+        return todo.deadline === deadline;
+      } else if (category === '다음 주') {
+        return isDeadlineInRange(todo.deadline, deadline.start, deadline.end);
+      } else {
+        return todo.deadline <= deadline;
+      }
+    });
   } else {
-    return todos.filter((todo) => todo.projectId === category.id);
+    return todos.filter((todo) => todo.status === 'active' && todo.projectId === category.id);
   }
 }
 
