@@ -3,7 +3,7 @@ import useTodos from '../hooks/useTodos';
 import KanbanList from './KanbanList';
 import { DragDropContext } from 'react-beautiful-dnd';
 
-export default function Kanban() {
+export default function Kanban({ category }) {
   const {
     productsQuery: { data: todos },
   } = useTodos();
@@ -44,7 +44,7 @@ export default function Kanban() {
     <DragDropContext onDragEnd={onDragEnd}>
       <ul className='flex overflow-x-auto overflow-y' style={{ height: 'calc(100vh - 105px)' }}>
         {dates.map((date, index) => (
-          <KanbanList key={date} date={date} index={index} />
+          <KanbanList key={date} date={date} index={index} category={category} />
         ))}
       </ul>
     </DragDropContext>

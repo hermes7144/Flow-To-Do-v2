@@ -1,9 +1,10 @@
 import React from 'react';
 import { isString } from '../js/CommonFunction';
 
-export default function SidebarItem({ item, category, handleSheduleClick }) {
+export default function SidebarItem({ item, category, handleSheduleClick, handleViewClick }) {
   const handleClick = () => {
     handleSheduleClick(item.name);
+    if (['오늘', '내일'].includes(item.name)) handleViewClick('LIST');
   };
 
   const formattedCategory = isString(category) ? category : category.name;

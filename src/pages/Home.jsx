@@ -31,7 +31,6 @@ export default function Home() {
   };
 
   const handleSidebar = () => {
-    console.log('handleSidbarClick');
     isHovered && setIsHovered(false);
   };
 
@@ -49,23 +48,23 @@ export default function Home() {
 
   return (
     <div className='flex w-full'>
-      {view === 'LIST' && <SidebarCont isOpen={isOpen} isHovered={isHovered} setIsHovered={setIsHovered} category={category} handleSheduleClick={handleSheduleClick} handleSidebar={handleSidebar} />}
+      {/* {view === 'LIST' && <SidebarCont isOpen={isOpen} isHovered={isHovered} setIsHovered={setIsHovered} category={category} handleSheduleClick={handleSheduleClick} handleSidebar={handleSidebar} />} */}
+
+      <SidebarCont isOpen={isOpen} isHovered={isHovered} setIsHovered={setIsHovered} category={category} handleSheduleClick={handleSheduleClick} handleSidebar={handleSidebar} handleViewClick={handleViewClick} />
       <TodoCont>
         <div className='flex justify-between p-2'>
-          {view === 'LIST' ? (
+          {
             <TodoHeader>
               <SidebarToggle isOpen={isOpen} toggleSidebar={toggleSidebar} handleMouseEnter={handleMouseEnter} />
               <span className='text-xl font-bold'>{isString(category) ? category : category.name}</span>
             </TodoHeader>
-          ) : (
-            <div></div>
-          )}
+          }
           <button className='hover:bg-gray-200 p-1' onClick={handleToggle}>
             <BsThreeDots className='h-6 w-6 text-gray-300' />
           </button>
           <NonModal show={showOption} handleOptionClick={handleOptionClick} handleViewClick={handleViewClick} />
         </div>
-        {view === 'LIST' ? <Todo category={category} /> : <Kanban />}
+        {view === 'LIST' ? <Todo category={category} /> : <Kanban category={category} />}
       </TodoCont>
       <Pomodoro />
     </div>

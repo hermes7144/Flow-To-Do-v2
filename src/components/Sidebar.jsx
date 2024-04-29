@@ -13,7 +13,7 @@ const categories = [
   { name: '다음 주', icon: <RiCalendarCheckFill className='h-6 w-6 text-blue-400' /> },
 ];
 
-export default function Sidebar({ category, handleSheduleClick, handleSidebar }) {
+export default function Sidebar({ category, handleSheduleClick, handleSidebar, handleViewClick }) {
   const {
     projectsQuery: { data: projects },
   } = useProjects();
@@ -23,7 +23,7 @@ export default function Sidebar({ category, handleSheduleClick, handleSidebar })
       <div>
         <ul>
           {categories.map((item) => (
-            <SidebarItem key={item.name} item={item} category={category} handleSheduleClick={handleSheduleClick} />
+            <SidebarItem key={item.name} item={item} category={category} handleSheduleClick={handleSheduleClick} handleViewClick={handleViewClick} />
           ))}
         </ul>
 
