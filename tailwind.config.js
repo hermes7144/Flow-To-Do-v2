@@ -13,7 +13,8 @@ export default {
         brand: '#fe5a4a',
       },
       backgroundImage: {
-        banner: `url('../background.png')`,
+        // banner: `url('../background.png')`,
+        todo: `url('../todo.png')`,
       },
     },
   },

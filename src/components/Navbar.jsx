@@ -14,10 +14,14 @@ export default function Navbar() {
         <h1 className='hidden md:block'>Flow To-Do</h1>
       </Link>
       <nav className='flex items-center gap-4'>
-        <Link to='/report' className='text-2xl'>
-          <GoGraph />
-        </Link>
-        {user && <User user={user} />}
+        {user && (
+          <>
+            <Link to='/report' className='text-2xl'>
+              <GoGraph />
+            </Link>
+            <User user={user} />
+          </>
+        )}
         {!user && <button onClick={login}>Login</button>}
         {user && <button onClick={logout}>Logout</button>}
       </nav>
