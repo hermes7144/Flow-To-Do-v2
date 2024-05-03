@@ -31,7 +31,7 @@ export function getNextWeek() {
   return getWeekRangeRelativeTo(1); // Get the next week
 }
 
-function formatDate(date) {
+export function formatDate(date) {
   return new Date(date).toISOString().substring(0, 10);
 }
 
