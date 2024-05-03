@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { formatDate, getDate } from '../js/CommonFunction';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -39,5 +39,5 @@ export default function TodoDate({ todo, date }) {
   ));
   ExampleCustomInput.displayName = 'Search';
 
-  return <DatePicker selected={date} onChange={(date) => handleUpdate(date)} customInput={<ExampleCustomInput />} />;
+  return <DatePicker popperPlacement='bottom-end' selected={date} onChange={(date) => handleUpdate(date)} customInput={<ExampleCustomInput />} />;
 }

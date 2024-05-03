@@ -41,7 +41,7 @@ export default function Todo({ category }) {
   return (
     <div className='p-2'>
       <PomodoroDashBoard activeTodo={activeTodo} completedCount={completedTodo.length} thisWeek={['오늘', '이번 주'].includes(category)} />
-      <AddTodo category={category} />
+      <AddTodo category={category} key={`${category}`} />
       <TodoList activeTodo={activeTodo} completedTodo={completedTodo} category={category} />
     </div>
   );
