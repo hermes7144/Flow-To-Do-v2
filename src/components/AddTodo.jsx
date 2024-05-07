@@ -17,13 +17,9 @@ export default function AddTodo({ category }) {
 
   const iconRange = Array.from({ length: 5 }, (_, index) => index + 1);
 
-  const displayDate = useMemo(() => {
-    return date ? <FaRegCalendar /> : null;
-  }, [date]);
-
   const CustomInputButton = React.forwardRef(({ _, onClick }, ref) => (
     <button className='hover:bg-gray-200 p-1 rounded-full' onClick={onClick} ref={ref}>
-      {displayDate}
+      <FaRegCalendar />
     </button>
   ));
   CustomInputButton.displayName = 'Search';
@@ -59,7 +55,7 @@ export default function AddTodo({ category }) {
         {!isString(category) && (
           <div className='flex items-center'>
             <div className='w-[1px] h-4 bg-slate-500 mx-1'></div>
-            <DatePicker popperPlacement='bottom-end' selected={date} onChange={setDate} customInput={<CustomInputButton>{displayDate}</CustomInputButton>} />
+            <DatePicker popperPlacement='bottom-end' selected={date} onChange={setDate} customInput={<CustomInputButton />} />
           </div>
         )}
       </div>
