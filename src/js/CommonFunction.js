@@ -7,6 +7,13 @@ export function getDate(offset = 0) {
   return formatDate(targetDate);
 }
 
+export function addDays(date, days) {
+  const clone = new Date(date);
+  clone.setDate(date.getDate() + days);
+  return clone;
+}
+
+
 function getWeekRangeRelativeTo(weekOffset) {
   const date = new Date();
   const dayOfWeek = date.getDay() || 7;
