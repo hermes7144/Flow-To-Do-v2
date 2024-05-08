@@ -24,7 +24,7 @@ export default function Landing() {
       </div>
       <div className='m-8 flex flex-col justify-center gap-10 md:gap-40'>
         <div className='w-full flex flex-col md:flex-row justify-center items-center gap-5 md:gap-20'>
-          <img className='w-[300px] h-[200px] md:w-[550px] md:h-[400px] bg-slate-400 rounded-lg shadow-lg' src='flow-main.png' />
+          <img className='w-[300px] h-[200px] md:w-[550px] md:h-[400px] bg-slate-400 rounded-lg shadow-lg' src='flow-main.webp' />
           <div className='mt-0 md:mt-16'>
             <h2 className='text-gray-900 text-4xl font-bold tracking-tight leading-[48px]'>뽀모도로 기법을 기반으로</h2>
             <p className='w-full md:w-96 text-gray-500 text-xl leading-loose'>작업 실행 시간을 정하고, 시간이 끝날 때까지 작업에 집중하면 수확은 효율성뿐만 아니라 예상치 못한 성취감도 가져옵니다.</p>
@@ -36,17 +36,17 @@ export default function Landing() {
             <p className='w-full md:w-96 text-gray-500 text-xl leading-loose'>일과 공부를 위한 계획을 세우고, 쇼핑 목록을 기록하고, 생일 알림을 설정하거나 일정을 조정하는 데 사용할 수 있습니다. Flow To-Do는 인생과 직장에서 모든 일을 처리하는 데 도움이 됩니다.</p>
           </div>
           <div className='w-[300px] md:w-[500px] h-[250px] relative'>
-            <img className='w-[207px] md:w-[407px] h-[158px] md:h-[268px] absolute' src='flow-kanban.png' />
-            <img className='w-[160px] md:w-[320px] h-[152px] md:h-[252px] left-[145px] top-[80px] absolute opacity-80 shadow-lg' src='flow-project.png' />
+            <img className='w-[207px] md:w-[407px] h-[158px] md:h-[268px] absolute' src='flow-kanban.webp' />
+            <img className='w-[160px] md:w-[320px] h-[152px] md:h-[252px] left-[145px] top-[80px] absolute opacity-80 shadow-lg' src='flow-project.webp' />
           </div>
         </div>
 
         <div className='w-full flex  flex-col md:flex-row justify-center items-center gap-5 md:gap-20'>
           <div className='w-[300px] md:w-[500px] h-[300px] md:h-[500px] relative'>
-            <img className='w-[112px] h-[106px] md:w-[212px] md:h-[206px] absolute rounded-lg' src='flow-computer.jpg' />
-            <img className='w-[112px] h-[106px] md:w-[212px] md:h-[206px] left-[137px] top-[205px] md:left-[237px] md:top-[305px] absolute rounded-lg' src='flow-laptop.jpg' />
-            <img className='w-[112px] h-[155px] md:w-[212px] md:h-[255px] left-[137px] top-[25px] md:left-[237px]  absolute rounded-lg' src='flow-mobile.jpg' />
-            <img className='w-[112px] h-[155px] md:w-[212px] md:h-[255px] left-0 top-[131px] md:top-[231px] absolute rounded-lg' src='flow-tablet.jpg' />
+            <img className='w-[112px] h-[106px] md:w-[212px] md:h-[206px] absolute rounded-lg' src='flow-computer.webp' />
+            <img className='w-[112px] h-[106px] md:w-[212px] md:h-[206px] left-[137px] top-[205px] md:left-[237px] md:top-[305px] absolute rounded-lg' src='flow-laptop.webp' />
+            <img className='w-[112px] h-[155px] md:w-[212px] md:h-[255px] left-[137px] top-[25px] md:left-[237px]  absolute rounded-lg' src='flow-mobile.webp' />
+            <img className='w-[112px] h-[155px] md:w-[212px] md:h-[255px] left-0 top-[131px] md:top-[231px] absolute rounded-lg' src='flow-tablet.webp' />
           </div>
           <div className='mt-0 md:mt-16'>
             <h2 className='text-gray-900 text-4xl font-bold leading-[48px] tracking-tight'>어디서나 액세스</h2>
