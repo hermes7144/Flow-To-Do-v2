@@ -38,8 +38,6 @@ export default function TodoList({ activeTodo, completedTodo, category }) {
   // 프로젝트 별로 정렬된 activeTodo를 얻기 위해 함수 호출
   const sortedActiveTodo = groupAndSortTodosByProject(activeTodo);
 
-  console.log(sortedActiveTodo);
-
   return (
     <div className='flex flex-col pb-20'>
       {!hasTodos && <EmptyTodo />}

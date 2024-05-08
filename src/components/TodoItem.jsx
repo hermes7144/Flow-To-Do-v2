@@ -4,7 +4,7 @@ import { FaRegTrashCan } from 'react-icons/fa6';
 import { FaRegPlayCircle, FaStopwatch } from 'react-icons/fa';
 import { getDate } from '../js/CommonFunction';
 import { usePomodoroContext } from '../context/PomodoroContext';
-import TodoDate from './TodoDate';
+import TodoDatePicker from './TodoDatePicker';
 
 export default function TodoItem({ todo, completed }) {
   const [name, setName] = useState(todo.name);
@@ -91,7 +91,7 @@ export default function TodoItem({ todo, completed }) {
       </div>
       <div className='flex items-center gap-1'>
         <span className='w-20 text-center'>
-          <TodoDate todo={todo} />
+          <TodoDatePicker todo={todo} />
         </span>
         <div className='flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-300 cursor-pointer' onClick={() => handleDelete(todo.id)}>
           <FaRegTrashCan />
