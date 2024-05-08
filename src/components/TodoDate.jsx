@@ -4,12 +4,11 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import useTodos from '../hooks/useTodos';
 
-export default function TodoDate({ todo, date }) {
+export default function TodoDate({ todo }) {
   const { updateTodo } = useTodos();
 
   const handleUpdate = (date) => {
     const deadline = formatDate(date);
-    console.log('deadline', deadline);
 
     updateTodo.mutate({
       ...todo,
@@ -18,9 +17,9 @@ export default function TodoDate({ todo, date }) {
   };
 
   const displayDate = useMemo(() => {
-    if (!date) return '추후';
+    if (!todo.deadline) return '추후';
 
-    const formattedDate = formatDate(date);
+    const formattedDate = formatDate(todo.deadline);
     const today = getDate();
     const yesterday = getDate(-1);
     const tomorrow = getDate(1);
@@ -29,15 +28,17 @@ export default function TodoDate({ todo, date }) {
     if (formattedDate === yesterday) return '어제';
     if (formattedDate === tomorrow) return '내일';
 
-    return new Date(date).toLocaleDateString('ko', { day: 'numeric', month: 'short' });
-  }, [date]);
+    return new Date(todo.deadline).toLocaleDateString('ko', { day: 'numeric', month: 'short' });
+  }, [todo]);
+
+  const dateCompare = todo?.deadline ? formatDate(todo.deadline) < getDate() : false;
 
   const ExampleCustomInput = React.forwardRef(({ _, onClick }, ref) => (
-    <button className='example-custom-input' onClick={onClick} ref={ref}>
+    <button className={`${dateCompare ? 'text-brand' : ''}`} onClick={onClick} ref={ref}>
       {displayDate}
     </button>
   ));
   ExampleCustomInput.displayName = 'Search';
 
-  return <DatePicker popperPlacement='bottom-end' selected={date} onChange={(date) => handleUpdate(date)} customInput={<ExampleCustomInput />} />;
+  return <DatePicker popperPlacement='bottom-end' selected={todo.deadline} onChange={handleUpdate} customInput={<ExampleCustomInput />} />;
 }

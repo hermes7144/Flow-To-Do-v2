@@ -91,7 +91,7 @@ export default function TodoItem({ todo, completed }) {
       </div>
       <div className='flex items-center gap-1'>
         <span className='w-20 text-center'>
-          <TodoDate todo={todo} date={todo.deadline} />
+          <TodoDate todo={todo} />
         </span>
         <div className='flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-300 cursor-pointer' onClick={() => handleDelete(todo.id)}>
           <FaRegTrashCan />

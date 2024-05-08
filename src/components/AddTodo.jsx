@@ -29,9 +29,9 @@ export default function AddTodo({ category }) {
       const todo = {
         name: input,
         deadline: getTodoDeadline(),
-
         estimate,
         projectId: isString(category) ? '' : category.id,
+        projectName: isString(category) ? '' : category.name,
       };
       addTodo.mutate(todo);
       setInput('');
