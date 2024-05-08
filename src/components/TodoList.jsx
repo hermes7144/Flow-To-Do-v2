@@ -3,10 +3,15 @@ import TodoItem from './TodoItem';
 import EmptyTodo from './EmptyTodo';
 import { getDate, isString } from '../js/CommonFunction';
 import TodoDate from './TodoDate';
+import useProjects from '../hooks/useProjects';
 
 export default function TodoList({ activeTodo, completedTodo, category }) {
+  const {
+    projectsQuery: { data: projects },
+  } = useProjects();
+
   const hasTodos = activeTodo && activeTodo.length > 0;
-  let lastProject = null;
+  let lastProjectId = null;
   let lastDate = null;
 
   // activeTodo를 프로젝트 별로 그룹화하고 정렬하는 함수
@@ -43,20 +48,19 @@ export default function TodoList({ activeTodo, completedTodo, category }) {
       {!hasTodos && <EmptyTodo />}
       {hasTodos && (
         <ul className='flex-1'>
-          {category === '오늘' || category === '내일' || !isString(category)
+          {!isString(category)
+            ? activeTodo.map((todo) => <TodoItem key={todo.id} todo={todo} />)
+            : category === '오늘' || category === '내일' || !isString(category)
             ? sortedActiveTodo.map((todo, index) => {
-                if (lastProject === null || todo.projectName !== lastProject) {
-                  lastProject = todo.projectName;
+                const isDifferentProject = todo.projectId !== '' && todo.projectId !== lastProjectId;
+                const project = isDifferentProject ? projects.find((project) => project.id === todo.projectId) : null;
 
-                  return (
-                    <React.Fragment key={index}>
-                      <span>{lastProject}</span>
-                      <TodoItem key={todo.id} todo={todo} />
-                    </React.Fragment>
-                  );
-                } else {
-                  return <TodoItem key={todo.id} todo={todo} />;
-                }
+                return (
+                  <React.Fragment key={index}>
+                    {isDifferentProject && <span>{project.name}</span>}
+                    <TodoItem key={todo.id} todo={todo} />
+                  </React.Fragment>
+                );
               })
             : activeTodo.map((todo, index) => {
                 if (lastDate === null || todo.deadline > lastDate) {
