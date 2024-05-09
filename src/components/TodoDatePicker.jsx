@@ -6,6 +6,7 @@ import useTodos from '../hooks/useTodos';
 
 export default function TodoDatePicker({ todo }) {
   const { updateTodo } = useTodos();
+  const date = todo.deadline ?? getDate();
 
   const handleUpdate = (date) => {
     const deadline = formatDate(date);
@@ -40,5 +41,5 @@ export default function TodoDatePicker({ todo }) {
   ));
   ExampleCustomInput.displayName = 'Search';
 
-  return <DatePicker popperPlacement='bottom-end' selected={todo.deadline} onChange={handleUpdate} customInput={<ExampleCustomInput />} />;
+  return <DatePicker popperPlacement='bottom-end' selected={date} onChange={handleUpdate} customInput={<ExampleCustomInput />} />;
 }

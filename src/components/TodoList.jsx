@@ -52,8 +52,10 @@ export default function TodoList({ activeTodo, completedTodo, category }) {
             ? activeTodo.map((todo) => <TodoItem key={todo.id} todo={todo} />)
             : category === '오늘' || category === '내일' || !isString(category)
             ? sortedActiveTodo.map((todo, index) => {
-                const isDifferentProject = todo.projectId !== '' && todo.projectId !== lastProjectId;
-                const project = isDifferentProject ? projects.find((project) => project.id === todo.projectId) : null;
+                const { projectId } = todo;
+                const isDifferentProject = projectId && projectId !== lastProjectId;
+                const project = isDifferentProject ? projects.find((proj) => proj.id === projectId) : null;
+                if (isDifferentProject) lastProjectId = projectId;
 
                 return (
                   <React.Fragment key={index}>
