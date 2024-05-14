@@ -4,6 +4,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 export default function TodoDate({ date }) {
   const displayDate = useMemo(() => {
+    if (!date) return '추후';
+
     const formattedDate = formatDate(date);
     const today = getDate();
     const tomorrow = getDate(1);
