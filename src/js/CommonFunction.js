@@ -4,8 +4,14 @@
 export function getDate(offset = 0) {
   const targetDate = new Date();
   targetDate.setDate(targetDate.getDate() + offset);
-  return formatDate(targetDate);
+
+  // Adjust to KST (UTC+9)
+  const utc = targetDate.getTime() + targetDate.getTimezoneOffset() * 60000;
+  const kstTime = new Date(utc + 9 * 3600000);
+
+  return formatDate(kstTime);
 }
+
 
 export function addDays(date, days) {
   const clone = new Date(date);
