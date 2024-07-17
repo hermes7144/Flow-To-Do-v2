@@ -53,12 +53,10 @@ export default function Home() {
       <SidebarCont isOpen={isOpen} isHovered={isHovered} setIsHovered={setIsHovered} category={category} handleSheduleClick={handleSheduleClick} handleSidebar={handleSidebar} handleViewClick={handleViewClick} />
       <TodoCont>
         <div className='flex justify-between p-2'>
-          {
-            <TodoHeader>
-              <SidebarToggle isOpen={isOpen} toggleSidebar={toggleSidebar} handleMouseEnter={handleMouseEnter} />
-              <span className='text-xl font-bold'>{isString(category) ? category : category.name}</span>
-            </TodoHeader>
-          }
+          <TodoHeader>
+            <SidebarToggle isOpen={isOpen} toggleSidebar={toggleSidebar} handleMouseEnter={handleMouseEnter} />
+            <span className='text-xl font-bold'>{isString(category) ? category : category.name}</span>
+          </TodoHeader>
           <button className='hover:bg-gray-200 p-1' onClick={handleToggle}>
             <BsThreeDots className='h-6 w-6 text-gray-300' />
           </button>

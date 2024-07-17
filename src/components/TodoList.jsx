@@ -1,18 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TodoItem from './TodoItem';
 import EmptyTodo from './EmptyTodo';
 import { getDate, isString } from '../js/CommonFunction';
 import TodoDate from './TodoDate';
 import useProjects from '../hooks/useProjects';
+import { MdArrowDropUp, MdArrowDropDown  } from "react-icons/md";
 
 export default function TodoList({ activeTodo, completedTodo, category }) {
   const {
     projectsQuery: { data: projects },
   } = useProjects();
+  const [isCompletedSectionOpen, setIsCompletedSectionOpen] = useState(false);
 
+  const toggleCompletedSection = () => {
+    setIsCompletedSectionOpen(!isCompletedSectionOpen);
+  };
+   
   const hasTodos = activeTodo && activeTodo.length > 0;
   let lastProjectId = null;
   let lastDate = null;
+  let completeLastDate = null;
+
+
 
   // activeTodo를 프로젝트 별로 그룹화하고 정렬하는 함수
   const groupAndSortTodosByProject = (todos) => {
@@ -42,16 +51,20 @@ export default function TodoList({ activeTodo, completedTodo, category }) {
 
   // 프로젝트 별로 정렬된 activeTodo를 얻기 위해 함수 호출
   const sortedActiveTodo = groupAndSortTodosByProject(activeTodo);
-
+  
   return (
     <div className='flex flex-col pb-20'>
       {!hasTodos && <EmptyTodo />}
       {hasTodos && (
         <ul className='flex-1'>
+          {/* 카테고리가 프로젝트인지 확인 */}
           {!isString(category)
             ? activeTodo.map((todo) => <TodoItem key={todo.id} todo={todo} />)
-            : category === '오늘' || category === '내일' || !isString(category)
-            ? sortedActiveTodo.map((todo, index) => {
+            : 
+              // 카테고리가 오늘, 내일이라면
+              ['오늘', '내일'].includes(category)
+            ? // 프로젝트 별로 보여줌
+              sortedActiveTodo.map((todo, index) => {
                 const { projectId } = todo;
                 const isDifferentProject = projectId && projectId !== lastProjectId;
                 const project = isDifferentProject ? projects.find((proj) => proj.id === projectId) : null;
@@ -64,18 +77,20 @@ export default function TodoList({ activeTodo, completedTodo, category }) {
                   </React.Fragment>
                 );
               })
-            : activeTodo.map((todo, index) => {
+              
+            : // 날짜별로 보여줌
+              activeTodo.map((todo, index) => {
                 if (lastDate === null || todo.deadline > lastDate) {
                   lastDate = todo.deadline < getDate() ? getDate() : todo.deadline;
 
                   return (
                     <React.Fragment key={index}>
-                      <TodoDate key={lastDate} date={lastDate} />
-                      <TodoItem key={todo.id} todo={todo} />
+                      <TodoDate date={lastDate} />
+                      <TodoItem todo={todo} />
                     </React.Fragment>
                   );
                 } else {
-                  return <TodoItem key={todo.id} todo={todo} />;
+                  return <TodoItem key={todo.id} todo={todo} />
                 }
               })}
         </ul>
@@ -83,12 +98,33 @@ export default function TodoList({ activeTodo, completedTodo, category }) {
 
       {completedTodo && (
         <div>
-          <div className='m-4'>완료한 할 일</div>
+          <div className='flex justify-center'>
+          <button
+            className='m-4 flex items-center justify-between px-4 py-2 bg-brand text-white rounded-3xl shadow-md hover:brightness-90 transition duration-300 ease-in-out gap-1'
+            onClick={toggleCompletedSection}
+          >
+            <span>{isCompletedSectionOpen ? '완료한 작업 숨기기' : '완료한 작업 보기'}</span>
+            {isCompletedSectionOpen ? <MdArrowDropUp className='w-5 h-5' /> : <MdArrowDropDown className='w-5 h-5' />}
+          </button>
+          </div>
+          {isCompletedSectionOpen && (
           <ul className='flex-1'>
-            {completedTodo.map((todo) => (
-              <TodoItem key={todo.id} todo={todo} completed />
-            ))}
+            {completedTodo.map((todo) => {
+                  if (completeLastDate === null || todo.completedDate < completeLastDate) {
+                  completeLastDate = todo.completedDate;
+
+                  return (
+                    <React.Fragment key={todo.id}>
+                      <span>{new Date(completeLastDate).toLocaleDateString('ko', { day: 'numeric', month: 'short' })}</span>
+                      <TodoItem todo={todo} completed />
+                    </React.Fragment>
+                  );
+                } else {
+                  return <TodoItem key={todo.id} todo={todo} completed />
+                }
+            })}
           </ul>
+          )}
         </div>
       )}
     </div>

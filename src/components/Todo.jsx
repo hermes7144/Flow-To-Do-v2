@@ -36,13 +36,25 @@ export default function Todo({ category }) {
   } = useTodos();
 
   const activeTodo = useMemo(() => filterActiveTodos(category, todos), [category, todos]);
-  const completedTodo = useMemo(() => todos.filter((todo) => todo.status === 'completed' && todo.completedDate === getDate()), [todos]);
+  const completedTodo = useMemo(() => todos.filter((todo) => todo.status === 'completed' ), [todos]);
+  const filteredCompletedTodo = useMemo(() => {
+    return completedTodo
+      .filter(todo => {
+        if (['오늘', '내일', '이번 주', '다음 주'].includes(category)) {
+          return todo.completedDate === getDate();
+        } else if (category && category.id) {
+          return todo.projectId === category.id;
+        }
+        return false;
+      })
+      .sort((a, b) => a.completedDate > b.completedDate ? -1 : 1);
+  }, [completedTodo, category]);
 
   return (
     <div className='p-2'>
-      <PomodoroDashBoard activeTodo={activeTodo} completedCount={completedTodo.length} thisWeek={['오늘', '이번 주'].includes(category)} />
-      <AddTodo category={category} key={`${category}`} />
-      <TodoList activeTodo={activeTodo} completedTodo={completedTodo} category={category} />
+      <PomodoroDashBoard activeTodo={activeTodo} completedCount={filteredCompletedTodo.length} thisWeek={['오늘', '이번 주'].includes(category)} />
+      <AddTodo category={category} />
+      <TodoList activeTodo={activeTodo} completedTodo={filteredCompletedTodo} category={category} />
     </div>
   );
 }
